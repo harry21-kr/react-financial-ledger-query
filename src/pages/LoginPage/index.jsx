@@ -1,5 +1,12 @@
+import { LoginForm } from "../../components/LoginPage";
+import { DefaultLayout } from "../../components/ui";
+
 const LoginPage = () => {
-  return <div>LoginPage</div>;
+  return (
+    <DefaultLayout>
+      <LoginForm />
+    </DefaultLayout>
+  );
 };
 
 export default LoginPage;
