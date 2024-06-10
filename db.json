@@ -1,0 +1,16 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "exam title",
+      "detail": "exam detail",
+      "amount": 10000
+    },
+    {
+      "id": "2",
+      "title": "exam title 2",
+      "detail": "exam detail 2",
+      "amount": 10000
+    }
+  ]
+}
