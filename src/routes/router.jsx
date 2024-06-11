@@ -6,8 +6,8 @@ import LoginPage from "../pages/LoginPage";
 
 const router = createBrowserRouter([
   { path: "/", element: <LoginPage /> },
-  { path: "/home", element: <HomePage /> },
-  { path: "/detail/:itemId", element: <DetailPage /> },
+  { path: "/home/:user", element: <HomePage /> },
+  { path: "/detail/:user/:itemId", element: <DetailPage /> },
 ]);
 
 export default router;

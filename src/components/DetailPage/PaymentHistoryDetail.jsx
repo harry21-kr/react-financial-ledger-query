@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { useUser } from "../../contexts/AuthContext";
 import { deleteHistoryItem } from "../../store/paymentHistory/paymentHistorySlice";
 import { numberWithCommas } from "../../utils";
 import { Button, Flex, Text } from "../ui";
@@ -8,6 +9,9 @@ import { Button, Flex, Text } from "../ui";
 export const PaymentHistoryDetail = ({ item, setIsEditMode }) => {
   const { date, title, description, amount } = item;
   const { itemId } = useParams();
+
+  const { user } = useUser();
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -33,7 +37,9 @@ export const PaymentHistoryDetail = ({ item, setIsEditMode }) => {
       <Flex $justifyContent="center" $gap="12px">
         <EditButton onClick={() => setIsEditMode(true)}>수정</EditButton>
         <DeleteButton onClick={handleDeleteItem}>삭제</DeleteButton>
-        <BackButton onClick={() => navigate("/")}>뒤로 가기</BackButton>
+        <BackButton onClick={() => navigate(`/home/${user.userId}`)}>
+          뒤로 가기
+        </BackButton>
       </Flex>
     </>
   );

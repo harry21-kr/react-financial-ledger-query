@@ -21,7 +21,7 @@ export const LoginForm = () => {
     onSuccess: (user) => {
       alert("로그인되었습니다.");
       setUser(user);
-      navigate("/home");
+      navigate(`/home/${user.userId}`);
     },
     onError: (error) => {
       alert(error.response.data.message);
