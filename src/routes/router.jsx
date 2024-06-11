@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         const token = sessionStorage.getItem("token");
         const user = await authApi.getUserData(token);
         if (params.user !== user.id) return redirect(`/home/${user.id}`);
-        return paymentHistoryApi.getPaymentHistoryById(user.id);
+        return paymentHistoryApi.getPaymentHistoryByItemId(params.itemId);
       } catch (err) {
         sessionStorage.removeItem("token");
         return redirect("/");

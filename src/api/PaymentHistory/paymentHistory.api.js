@@ -31,6 +31,11 @@ class PaymentHistoryAPI {
     const res = await this.#client.get(`/history?user=${userId}`);
     return res.data;
   }
+
+  async getPaymentHistoryByItemId(itemId) {
+    const res = await this.#client.get(`/history?id=${itemId}`);
+    return res.data;
+  }
 }
 
 const paymentHistoryApi = new PaymentHistoryAPI();

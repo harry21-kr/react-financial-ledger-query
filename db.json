@@ -1,20 +1,3 @@
 {
-  "history": [
-    {
-      "id": "1",
-      "title": "수정된 타이틀",
-      "description": "exam detail",
-      "amount": 10000,
-      "date": "2024-06-11",
-      "user": "harry21"
-    },
-    {
-      "id": "2",
-      "title": "수정된 항목2",
-      "description": "수정된 내용2",
-      "amount": 20000,
-      "date": "2024-06-12",
-      "user": "harry21"
-    }
-  ]
+  "history": []
 }

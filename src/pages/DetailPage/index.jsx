@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 import {
   EditPaymentHistory,
@@ -10,11 +10,7 @@ import { Box, DefaultLayout, Flex } from "../../components/ui";
 const DetailPage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const { itemId } = useParams();
-
-  const paymentHistoryList = useLoaderData();
-
-  const targetItem = paymentHistoryList.find((item) => item.id === itemId);
+  const paymentHistoryItem = useLoaderData();
 
   return (
     <DetailPageDefaultLayout>
@@ -28,12 +24,12 @@ const DetailPage = () => {
           >
             {isEditMode ? (
               <EditPaymentHistory
-                item={targetItem}
+                item={paymentHistoryItem[0]}
                 setIsEditMode={setIsEditMode}
               />
             ) : (
               <PaymentHistoryDetail
-                item={targetItem}
+                item={paymentHistoryItem[0]}
                 setIsEditMode={setIsEditMode}
               />
             )}
