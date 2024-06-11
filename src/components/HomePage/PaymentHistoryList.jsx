@@ -1,11 +1,10 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useUser } from "../../contexts/AuthContext";
 import { numberWithCommas } from "../../utils";
 import { Box, Button, Flex, Text } from "../ui";
 
 export const PaymentHistoryList = ({ selectedMonth }) => {
-  const { user } = useUser();
+  const { user } = useParams();
 
   const navigate = useNavigate();
 
@@ -23,7 +22,7 @@ export const PaymentHistoryList = ({ selectedMonth }) => {
           filteredList.map(({ id, date, title, amount, description }) => (
             <ListButton
               key={id}
-              onClick={() => navigate(`/detail/${user.userId}/${id}`)}
+              onClick={() => navigate(`/detail/${user}/${id}`)}
             >
               <Flex $flexDirection="column" $gap="4px">
                 <Text $fontSize="14px">{date}</Text>

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import authApi from "../../api/Auth/auth.api";
-import { useUser } from "../../contexts/AuthContext";
 import { Button, Input } from "../ui";
 
 export const LoginForm = () => {
@@ -12,15 +11,12 @@ export const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
 
-  const { setUser } = useUser();
-
   const navigate = useNavigate();
 
   const { mutateAsync: login } = useMutation({
     mutationFn: ({ id, password }) => authApi.login(id, password),
     onSuccess: (user) => {
       alert("로그인되었습니다.");
-      setUser(user);
       sessionStorage.setItem("token", user.accessToken);
       navigate(`/home/${user.userId}`);
     },
