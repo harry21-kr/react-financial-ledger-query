@@ -1,8 +1,8 @@
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { addHistoryItem } from "../../store/paymentHistory/paymentHistorySlice";
+import paymentHistoryApi from "../../api/PaymentHistory/paymentHistory.api";
 import InputField from "../common/InputField";
 import { Box, Button, Flex } from "../ui";
 
@@ -17,9 +17,12 @@ const initialPaymentHistoryItem = {
 export const PaymentHistoryForm = ({ selectedMonth }) => {
   const [newItem, setNewItem] = useState(initialPaymentHistoryItem);
 
-  const dispatch = useDispatch();
+  const { mutateAsync } = useMutation({
+    mutationFn: async (newHistory) =>
+      paymentHistoryApi.postPaymentHistory(newHistory),
+  });
 
-  const handleSubmitHistory = () => {
+  const handleSubmitHistory = async () => {
     if (!newItem.title.length) {
       return alert("지출 항목을 입력해주세요");
     } else if (!Number.isInteger(newItem.amount)) {
@@ -30,7 +33,7 @@ export const PaymentHistoryForm = ({ selectedMonth }) => {
       return alert("지출 내용을 입력해주세요");
     }
     const newItemWithId = { ...newItem, id: uuidv4() };
-    dispatch(addHistoryItem(newItemWithId));
+    await mutateAsync(newItemWithId);
     setNewItem({
       ...initialPaymentHistoryItem,
       date: newItem.date,

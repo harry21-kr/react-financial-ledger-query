@@ -1,24 +1,25 @@
-import { useDispatch } from "react-redux";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { deleteHistoryItem } from "../../store/paymentHistory/paymentHistorySlice";
+import paymentHistoryApi from "../../api/PaymentHistory/paymentHistory.api";
 import { numberWithCommas } from "../../utils";
 import { Button, Flex, Text } from "../ui";
 
 export const PaymentHistoryDetail = ({ item, setIsEditMode }) => {
-  const { date, title, description, amount } = item;
-  const { itemId } = useParams();
+  const { id, date, title, description, amount } = item;
 
   const { user } = useParams();
 
+  const { mutateAsync: deleteHistory } = useMutation({
+    mutationFn: async () => paymentHistoryApi.deletePaymentHistory(id),
+  });
+
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-
-  const handleDeleteItem = () => {
+  const handleDeleteItem = async () => {
     if (confirm("정말 삭제하시겠습니까?")) {
-      dispatch(deleteHistoryItem(itemId));
-      navigate("/");
+      await deleteHistory();
+      navigate(`/home/${user}`);
     }
   };
 

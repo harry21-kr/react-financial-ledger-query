@@ -1,16 +1,19 @@
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { editHistoryItem } from "../../store/paymentHistory/paymentHistorySlice";
+import paymentHistoryApi from "../../api/PaymentHistory/paymentHistory.api";
 import InputField from "../common/InputField";
 import { Button, Flex } from "../ui";
 
 export const EditPaymentHistory = ({ item, setIsEditMode }) => {
   const [newItem, setNewItem] = useState(item);
 
-  const dispatch = useDispatch();
+  const { mutateAsync: editItem } = useMutation({
+    mutationFn: async () =>
+      paymentHistoryApi.patchPaymentHistory(item.id, newItem),
+  });
 
-  const handleEditItem = () => {
+  const handleEditItem = async () => {
     if (!newItem.title.length) {
       return alert("지출 항목을 입력해주세요");
     } else if (!newItem.amount) {
@@ -20,7 +23,7 @@ export const EditPaymentHistory = ({ item, setIsEditMode }) => {
     } else if (!newItem.description) {
       return alert("지출 내용을 입력해주세요");
     }
-    dispatch(editHistoryItem(newItem));
+    await editItem();
     setIsEditMode(false);
   };
 
