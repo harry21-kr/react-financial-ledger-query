@@ -21,6 +21,7 @@ export const LoginForm = () => {
     onSuccess: (user) => {
       alert("로그인되었습니다.");
       setUser(user);
+      sessionStorage.setItem("token", user.accessToken);
       navigate(`/home/${user.userId}`);
     },
     onError: (error) => {
