@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import styled from "styled-components";
 import paymentHistoryApi from "../../api/PaymentHistory/paymentHistory.api";
@@ -8,9 +8,13 @@ import { Button, Flex } from "../ui";
 export const EditPaymentHistory = ({ item, setIsEditMode }) => {
   const [newItem, setNewItem] = useState(item);
 
+  const queryClient = useQueryClient();
+
   const { mutateAsync: editItem } = useMutation({
     mutationFn: async () =>
       paymentHistoryApi.patchPaymentHistory(item.id, newItem),
+    onSuccess: async () =>
+      await queryClient.invalidateQueries({ queryKey: ["historyItem"] }),
   });
 
   const handleEditItem = async () => {

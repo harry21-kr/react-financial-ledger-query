@@ -1,5 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import paymentHistoryApi from "../../api/PaymentHistory/paymentHistory.api";
@@ -15,11 +16,16 @@ const initialPaymentHistoryItem = {
 };
 
 export const PaymentHistoryForm = ({ selectedMonth }) => {
+  const { user } = useParams();
+
   const [newItem, setNewItem] = useState(initialPaymentHistoryItem);
+  const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation({
     mutationFn: async (newHistory) =>
       paymentHistoryApi.postPaymentHistory(newHistory),
+    onSuccess: async () =>
+      await queryClient.invalidateQueries({ queryKey: ["history"] }),
   });
 
   const handleSubmitHistory = async () => {
@@ -32,7 +38,7 @@ export const PaymentHistoryForm = ({ selectedMonth }) => {
     } else if (!newItem.description) {
       return alert("지출 내용을 입력해주세요");
     }
-    const newItemWithId = { ...newItem, id: uuidv4() };
+    const newItemWithId = { ...newItem, user, id: uuidv4() };
     await mutateAsync(newItemWithId);
     setNewItem({
       ...initialPaymentHistoryItem,

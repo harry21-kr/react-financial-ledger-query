@@ -1,5 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import paymentHistoryApi from "../../api/PaymentHistory/paymentHistory.api";
 import { numberWithCommas } from "../../utils";
 import { Box, Button, Flex, Text } from "../ui";
 
@@ -10,7 +12,13 @@ export const PaymentHistoryList = ({ selectedMonth }) => {
 
   const paymentHistoryList = useLoaderData();
 
-  const filteredList = paymentHistoryList.filter(({ date }) => {
+  const { data } = useQuery({
+    queryKey: ["history"],
+    queryFn: () => paymentHistoryApi.getPaymentHistoryById(user),
+    initialData: paymentHistoryList,
+  });
+
+  const filteredList = data.filter(({ date }) => {
     const formattedDate = new Date(date);
     return formattedDate.getMonth() + 1 === selectedMonth;
   });
