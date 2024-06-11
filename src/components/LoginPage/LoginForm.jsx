@@ -1,19 +1,43 @@
 import { useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import authApi from "../../api/Auth/auth.api";
 import { useUser } from "../../contexts/AuthContext";
 import { Button, Input } from "../ui";
 
 export const LoginForm = () => {
-  const [id, setId] = useState("harry21");
-  const [password, setPassword] = useState("password");
+  const [isLoginMode, setIsLoginMode] = useState(true);
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
 
-  const { user, setUser } = useUser();
+  const { setUser } = useUser();
+
+  const navigate = useNavigate();
 
   const { mutateAsync: login } = useMutation({
     mutationFn: ({ id, password }) => authApi.login(id, password),
-    onSuccess: (user) => setUser(user),
+    onSuccess: (user) => {
+      alert("로그인되었습니다.");
+      setUser(user);
+      navigate("/home");
+    },
+    onError: (error) => {
+      alert(error.response.data.message);
+    },
+  });
+
+  const { mutateAsync: signUp } = useMutation({
+    mutationFn: ({ id, password, nickname }) =>
+      authApi.signUp(id, password, nickname ? nickname : id),
+    onSuccess: (user) => {
+      alert(user.message);
+      setIsLoginMode(true);
+    },
+    onError: (error) => {
+      alert(error.response.data.message);
+    },
   });
 
   const handleLogin = async (e) => {
@@ -21,12 +45,14 @@ export const LoginForm = () => {
     await login({ id, password });
   };
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    await signUp({ id, password, nickname });
+  };
 
   return (
-    <LoginFormWrapper onSubmit={handleLogin}>
+    <LoginFormWrapper onSubmit={isLoginMode ? handleLogin : handleSignUp}>
+      <LoginText>{isLoginMode ? "로그인" : "회원가입"}</LoginText>
       <LoginInput
         type="text"
         value={id}
@@ -39,7 +65,23 @@ export const LoginForm = () => {
         placeholder="비밀번호를 입력해주세요."
         onChange={(e) => setPassword(e.target.value)}
       />
-      <LoginSubmitButton type="submit">로그인</LoginSubmitButton>
+      {!isLoginMode && (
+        <LoginInput
+          type="text"
+          value={nickname}
+          placeholder="사용하실 닉네임을 입력해주세요."
+          onChange={(e) => setNickname(e.target.value)}
+        />
+      )}
+      <LoginSubmitButton type="submit">
+        {isLoginMode ? "로그인" : "회원가입"}
+      </LoginSubmitButton>
+      <LoginModeButton
+        type="button"
+        onClick={() => setIsLoginMode(!isLoginMode)}
+      >
+        아직 회원이 아니신가요? <span>회원가입</span>
+      </LoginModeButton>
     </LoginFormWrapper>
   );
 };
@@ -61,4 +103,20 @@ const LoginInput = styled(Input)`
 const LoginSubmitButton = styled(Button)`
   height: 40px;
   color: black;
+`;
+
+const LoginModeButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  & > span {
+    color: blue;
+  }
+`;
+
+const LoginText = styled.h2`
+  font-size: 40px;
+  color: white;
+  text-align: center;
 `;
