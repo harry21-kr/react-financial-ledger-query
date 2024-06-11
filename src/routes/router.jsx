@@ -1,6 +1,6 @@
 import { createBrowserRouter, redirect } from "react-router-dom";
 
-import authApi from "../api/Auth/auth.api";
+import paymentHistoryApi from "../api/PaymentHistory/paymentHistory.api";
 import DetailPage from "../pages/DetailPage";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
@@ -12,19 +12,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/home/:user",
-    loader: async () => {
+    loader: async ({ params }) => {
       const token = sessionStorage.getItem("token");
       if (!token) return redirect("/");
-      return authApi.getUserData(token);
+      return paymentHistoryApi.getPaymentHistoryById(params.user);
     },
     element: <HomePage />,
   },
   {
     path: "/detail/:user/:itemId",
-    loader: async () => {
+    loader: async ({ params }) => {
       const token = sessionStorage.getItem("token");
       if (!token) return redirect("/");
-      return authApi.getUserData(token);
+      return paymentHistoryApi.getPaymentHistoryById(params.user);
     },
     element: <DetailPage />,
   },

@@ -1,7 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useUser } from "../../contexts/AuthContext";
-import { usePaymentHistoryList } from "../../store/paymentHistory/hooks";
 import { numberWithCommas } from "../../utils";
 import { Box, Button, Flex, Text } from "../ui";
 
@@ -10,7 +9,7 @@ export const PaymentHistoryList = ({ selectedMonth }) => {
 
   const navigate = useNavigate();
 
-  const paymentHistoryList = usePaymentHistoryList();
+  const paymentHistoryList = useLoaderData();
 
   const filteredList = paymentHistoryList.filter(({ date }) => {
     const formattedDate = new Date(date);

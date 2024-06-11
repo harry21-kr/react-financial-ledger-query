@@ -1,19 +1,19 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import styled from "styled-components";
 import {
   EditPaymentHistory,
   PaymentHistoryDetail,
 } from "../../components/DetailPage";
 import { Box, DefaultLayout, Flex } from "../../components/ui";
-import { usePaymentHistoryList } from "../../store/paymentHistory/hooks";
 
 const DetailPage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
 
   const { itemId } = useParams();
 
-  const paymentHistoryList = usePaymentHistoryList();
+  const paymentHistoryList = useLoaderData();
+
   const targetItem = paymentHistoryList.find((item) => item.id === itemId);
 
   return (

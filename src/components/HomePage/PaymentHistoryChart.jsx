@@ -5,13 +5,13 @@ import {
   LinearScale,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { usePaymentHistoryList } from "../../store/paymentHistory/hooks";
+import { useLoaderData } from "react-router-dom";
 import { Box } from "../ui";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
 export const PaymentHistoryChart = ({ selectedMonth }) => {
-  const paymentHistoryList = usePaymentHistoryList();
+  const paymentHistoryList = useLoaderData();
 
   const filteredList = paymentHistoryList.filter(({ date }) => {
     const formattedDate = new Date(date);

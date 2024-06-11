@@ -1,16 +1,21 @@
 {
-  "posts": [
-    {
-      "id": "1",
-      "title": "exam title",
-      "detail": "exam detail",
-      "amount": 10000
-    },
-    {
-      "id": "2",
-      "title": "exam title 2",
-      "detail": "exam detail 2",
-      "amount": 10000
-    }
-  ]
+  "someUser": {},
+  "harry21": {
+    "history": [
+      {
+        "id": "1",
+        "title": "exam title",
+        "description": "exam detail",
+        "amount": 10000,
+        "date": "2024-06-11"
+      },
+      {
+        "id": "2",
+        "title": "exam title2",
+        "description": "exam des2",
+        "amount": 20000,
+        "date": "2024-06-12"
+      }
+    ]
+  }
 }
