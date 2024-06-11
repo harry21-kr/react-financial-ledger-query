@@ -22,12 +22,14 @@ const router = createBrowserRouter([
   },
   {
     path: "/home/:user",
-    loader: async () => {
+    loader: async ({ params }) => {
       try {
         const token = sessionStorage.getItem("token");
         const user = await authApi.getUserData(token);
+        if (params.user !== user.id) return redirect(`/home/${user.id}`);
         return paymentHistoryApi.getPaymentHistoryById(user.id);
       } catch (err) {
+        sessionStorage.removeItem("token");
         return redirect("/");
       }
     },
@@ -35,12 +37,14 @@ const router = createBrowserRouter([
   },
   {
     path: "/detail/:user/:itemId",
-    loader: async () => {
+    loader: async ({ params }) => {
       try {
         const token = sessionStorage.getItem("token");
         const user = await authApi.getUserData(token);
+        if (params.user !== user.id) return redirect(`/home/${user.id}`);
         return paymentHistoryApi.getPaymentHistoryById(user.id);
       } catch (err) {
+        sessionStorage.removeItem("token");
         return redirect("/");
       }
     },
