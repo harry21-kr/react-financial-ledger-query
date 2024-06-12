@@ -18,7 +18,7 @@ const DetailPage = () => {
 
   const { data } = useQuery({
     queryKey: ["historyItem"],
-    queryFn: async () => paymentHistoryApi.getPaymentHistoryByItemId(itemId),
+    queryFn: () => paymentHistoryApi.getPaymentHistoryByItemId(itemId),
     initialData: paymentHistoryItem,
   });
 

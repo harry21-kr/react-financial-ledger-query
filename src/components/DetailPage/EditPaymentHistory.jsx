@@ -11,10 +11,9 @@ export const EditPaymentHistory = ({ item, setIsEditMode }) => {
   const queryClient = useQueryClient();
 
   const { mutateAsync: editItem } = useMutation({
-    mutationFn: async () =>
-      paymentHistoryApi.patchPaymentHistory(item.id, newItem),
-    onSuccess: async () =>
-      await queryClient.invalidateQueries({ queryKey: ["historyItem"] }),
+    mutationFn: () => paymentHistoryApi.patchPaymentHistory(item.id, newItem),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["historyItem"] }),
   });
 
   const handleEditItem = async () => {

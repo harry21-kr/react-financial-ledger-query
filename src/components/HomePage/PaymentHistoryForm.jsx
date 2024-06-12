@@ -22,10 +22,9 @@ export const PaymentHistoryForm = ({ selectedMonth }) => {
   const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation({
-    mutationFn: async (newHistory) =>
+    mutationFn: (newHistory) =>
       paymentHistoryApi.postPaymentHistory(newHistory),
-    onSuccess: async () =>
-      await queryClient.invalidateQueries({ queryKey: ["history"] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["history"] }),
   });
 
   const handleSubmitHistory = async () => {
