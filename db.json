@@ -23,6 +23,14 @@
       "amount": 10000,
       "description": "아무 내용3",
       "user": "harry21"
+    },
+    {
+      "id": "4cadc92b-54a9-442d-b2e8-65255f821305",
+      "date": "2024-05-21",
+      "title": "아무항목4",
+      "amount": 40000,
+      "description": "아무항목4",
+      "user": "harry21"
     }
   ]
 }

@@ -1,8 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import authApi from "../../api/Auth/auth.api";
+import useAuthMutation from "../../hooks/mutate/useAuthMutation";
 import { Button, Input } from "../ui";
 
 export const LoginForm = () => {
@@ -13,38 +12,18 @@ export const LoginForm = () => {
 
   const navigate = useNavigate();
 
-  const { mutateAsync: login } = useMutation({
-    mutationFn: ({ id, password }) => authApi.login(id, password),
-    onSuccess: (user) => {
-      alert("로그인되었습니다.");
-      sessionStorage.setItem("token", user.accessToken);
-      navigate(`/home/${user.userId}`);
-    },
-    onError: (error) => {
-      alert(error.response.data.message);
-    },
-  });
-
-  const { mutateAsync: signUp } = useMutation({
-    mutationFn: ({ id, password, nickname }) =>
-      authApi.signUp(id, password, nickname ? nickname : id),
-    onSuccess: (user) => {
-      alert(user.message);
-      setIsLoginMode(true);
-    },
-    onError: (error) => {
-      alert(error.response.data.message);
-    },
-  });
+  const { login, signUp } = useAuthMutation();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     await login({ id, password });
+    navigate(`/home/${id}`);
   };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     await signUp({ id, password, nickname });
+    setIsLoginMode(true);
   };
 
   return (
