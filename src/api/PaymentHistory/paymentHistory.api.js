@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const PAYMENT_HISTORY_BASE_URL = "http://localhost:3000";
+const PAYMENT_HISTORY_BASE_URL = "https://candy-deadpan-cricket.glitch.me";
 
 class PaymentHistoryAPI {
   #client;
