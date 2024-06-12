@@ -7,7 +7,7 @@ import {
   PaymentHistoryList,
   PaymentHistoryMonth,
 } from "../../components/HomePage";
-import { DefaultLayout, Flex } from "../../components/ui";
+import { Flex } from "../../components/ui";
 import useHistoryListQuery from "../../hooks/query/useHistoryListQuery";
 
 const HomePage = () => {
@@ -24,24 +24,22 @@ const HomePage = () => {
   });
 
   return (
-    <DefaultLayout>
-      <Wrap>
-        <PaymentHistoryForm selectedMonth={selectedMonth} />
-        <PaymentHistoryMonth
-          selectedMonth={selectedMonth}
-          setSelectedMonth={setSelectedMonth}
-        />
-        <PaymentHistoryChart historyList={filteredList} />
-        <PaymentHistoryList historyList={filteredList} />
-      </Wrap>
-    </DefaultLayout>
+    <Wrap>
+      <PaymentHistoryForm selectedMonth={selectedMonth} />
+      <PaymentHistoryMonth
+        selectedMonth={selectedMonth}
+        setSelectedMonth={setSelectedMonth}
+      />
+      <PaymentHistoryChart historyList={filteredList} />
+      <PaymentHistoryList historyList={filteredList} />
+    </Wrap>
   );
 };
 
 export default HomePage;
 
 const Wrap = styled(Flex)`
-  padding-top: 32px;
+  padding-top: 112px;
   padding-bottom: 32px;
   flex-direction: column;
   gap: 32px;
