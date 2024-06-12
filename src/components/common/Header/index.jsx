@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <HeaderWrapper>
       <HeaderContentWrapper>
-        <HeaderUserText>{user.nickname}</HeaderUserText>
+        <HeaderUserText>{user?.nickname}</HeaderUserText>
         <HeaderButton onClick={logout}>로그아웃</HeaderButton>
       </HeaderContentWrapper>
     </HeaderWrapper>
