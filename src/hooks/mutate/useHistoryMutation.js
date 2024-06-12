@@ -12,7 +12,7 @@ const useHistoryMutation = () => {
   });
 
   const { mutateAsync: patchHistoryItem } = useMutation({
-    mutationFn: (itemId, editedHistoryItem) =>
+    mutationFn: ({ itemId, editedHistoryItem }) =>
       paymentHistoryApi.patchPaymentHistory(itemId, editedHistoryItem),
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ["historyItem"] }),

@@ -5,6 +5,7 @@ import InputField from "../common/InputField";
 import { Button, Flex } from "../ui";
 
 export const EditPaymentHistory = ({ item, setIsEditMode }) => {
+  const { id } = item;
   const [newItem, setNewItem] = useState(item);
 
   const { patchHistoryItem } = useHistoryMutation();
@@ -19,7 +20,7 @@ export const EditPaymentHistory = ({ item, setIsEditMode }) => {
     } else if (!newItem.description) {
       return alert("지출 내용을 입력해주세요");
     }
-    await patchHistoryItem();
+    await patchHistoryItem({ itemId: id, editedHistoryItem: newItem });
     setIsEditMode(false);
   };
 
