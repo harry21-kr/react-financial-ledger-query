@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const PAYMENT_HISTORY_BASE_URL = "https://candy-deadpan-cricket.glitch.me";
+const PAYMENT_HISTORY_BASE_URL = import.meta.env.VITE_DB_URL;
 
 class PaymentHistoryAPI {
   #client;
