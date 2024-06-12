@@ -1,11 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import useAuthQuery from "../../../hooks/query/useAuthQuery";
 import { Button } from "../../ui";
 
 const Header = () => {
   const navigate = useNavigate();
+  const accessToken = sessionStorage.getItem("token");
 
-  const Logout = () => {
+  const user = useAuthQuery(accessToken);
+
+  const logout = () => {
     sessionStorage.removeItem("token");
     navigate("/");
   };
@@ -13,8 +17,8 @@ const Header = () => {
   return (
     <HeaderWrapper>
       <HeaderContentWrapper>
-        <HeaderUserText>닉네임</HeaderUserText>
-        <HeaderButton onClick={Logout}>로그아웃</HeaderButton>
+        <HeaderUserText>{user.nickname}</HeaderUserText>
+        <HeaderButton onClick={logout}>로그아웃</HeaderButton>
       </HeaderContentWrapper>
     </HeaderWrapper>
   );
