@@ -1,25 +1,20 @@
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import paymentHistoryApi from "../../api/PaymentHistory/paymentHistory.api";
+import useHistoryMutation from "../../hooks/mutate/useHistoryMutation";
 import { numberWithCommas } from "../../utils";
 import { Button, Flex, Text } from "../ui";
 
 export const PaymentHistoryDetail = ({ item, setIsEditMode }) => {
-  const { id, date, title, description, amount } = item;
+  const { id, date, title, description, amount, userId } = item;
 
-  const { user } = useParams();
-
-  const { mutateAsync: deleteHistory } = useMutation({
-    mutationFn: async () => paymentHistoryApi.deletePaymentHistory(id),
-  });
+  const { deleteHistoryItem } = useHistoryMutation();
 
   const navigate = useNavigate();
 
   const handleDeleteItem = async () => {
     if (confirm("정말 삭제하시겠습니까?")) {
-      await deleteHistory();
-      navigate(`/home/${user}`);
+      await deleteHistoryItem(id);
+      navigate(`/home/${userId}`);
     }
   };
 
@@ -37,7 +32,7 @@ export const PaymentHistoryDetail = ({ item, setIsEditMode }) => {
       <Flex $justifyContent="center" $gap="12px">
         <EditButton onClick={() => setIsEditMode(true)}>수정</EditButton>
         <DeleteButton onClick={handleDeleteItem}>삭제</DeleteButton>
-        <BackButton onClick={() => navigate(`/home/${user}`)}>
+        <BackButton onClick={() => navigate(`/home/${userId}`)}>
           뒤로 가기
         </BackButton>
       </Flex>

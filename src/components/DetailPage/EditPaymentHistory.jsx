@@ -1,20 +1,13 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import styled from "styled-components";
-import paymentHistoryApi from "../../api/PaymentHistory/paymentHistory.api";
+import useHistoryMutation from "../../hooks/mutate/useHistoryMutation";
 import InputField from "../common/InputField";
 import { Button, Flex } from "../ui";
 
 export const EditPaymentHistory = ({ item, setIsEditMode }) => {
   const [newItem, setNewItem] = useState(item);
 
-  const queryClient = useQueryClient();
-
-  const { mutateAsync: editItem } = useMutation({
-    mutationFn: () => paymentHistoryApi.patchPaymentHistory(item.id, newItem),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["historyItem"] }),
-  });
+  const { patchHistoryItem } = useHistoryMutation();
 
   const handleEditItem = async () => {
     if (!newItem.title.length) {
@@ -26,7 +19,7 @@ export const EditPaymentHistory = ({ item, setIsEditMode }) => {
     } else if (!newItem.description) {
       return alert("지출 내용을 입력해주세요");
     }
-    await editItem();
+    await patchHistoryItem();
     setIsEditMode(false);
   };
 

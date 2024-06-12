@@ -3,7 +3,7 @@ import paymentHistoryApi from "../../api/PaymentHistory/paymentHistory.api";
 
 const useHistoryListQuery = (initialHistoryList, userId) => {
   const { data: historyList } = useQuery({
-    queryKey: ["history"],
+    queryKey: ["historyList"],
     queryFn: () => paymentHistoryApi.getPaymentHistoryById(userId),
     initialData: initialHistoryList,
   });
