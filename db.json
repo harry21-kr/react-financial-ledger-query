@@ -11,7 +11,7 @@
     {
       "id": "620be38b-3c96-43a6-ba44-b2585a9a0a1e",
       "date": "2024-05-21",
-      "title": "아무 항목",
+      "title": "아무 항목dka",
       "amount": 10000,
       "description": "아무 내용",
       "user": "harry21"
@@ -22,6 +22,14 @@
       "title": "아무 항목3",
       "amount": 20000,
       "description": "아무 내용",
+      "user": "harry21"
+    },
+    {
+      "id": "c6f881f4-f6a9-4f6d-95ae-01ca3e9e71f3",
+      "date": "2024-05-21",
+      "title": "아무 항목2",
+      "amount": 10000,
+      "description": "아무 내용3",
       "user": "harry21"
     }
   ]

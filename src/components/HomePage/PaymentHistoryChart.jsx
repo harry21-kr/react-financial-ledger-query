@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import {
   BarElement,
   CategoryScale,
@@ -6,29 +5,13 @@ import {
   LinearScale,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { useLoaderData, useParams } from "react-router-dom";
-import paymentHistoryApi from "../../api/PaymentHistory/paymentHistory.api";
 import { Box } from "../ui";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
-export const PaymentHistoryChart = ({ selectedMonth }) => {
-  const { user } = useParams();
-  const paymentHistoryList = useLoaderData();
-
-  const { data } = useQuery({
-    queryKey: ["history"],
-    queryFn: () => paymentHistoryApi.getPaymentHistoryById(user),
-    initialData: paymentHistoryList,
-  });
-
-  const filteredList = data.filter(({ date }) => {
-    const formattedDate = new Date(date);
-    return formattedDate.getMonth() + 1 === selectedMonth;
-  });
-
+export const PaymentHistoryChart = ({ historyList }) => {
   const chartData = {
-    labels: filteredList.map(({ title }) => title),
+    labels: historyList.map(({ title }) => title),
     datasets: [
       {
         label: "My First dataset",
@@ -45,7 +28,7 @@ export const PaymentHistoryChart = ({ selectedMonth }) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: filteredList.map(({ amount }) => amount),
+        data: historyList.map(({ amount }) => amount),
       },
     ],
   };

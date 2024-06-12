@@ -1,26 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
 import styled from "styled-components";
-import paymentHistoryApi from "../../api/PaymentHistory/paymentHistory.api";
 import {
   EditPaymentHistory,
   PaymentHistoryDetail,
 } from "../../components/DetailPage";
 import { Box, DefaultLayout, Flex } from "../../components/ui";
+import useHistoryItemQuery from "../../hooks/query/useHistoryItemQuery";
 
 const DetailPage = () => {
   const { itemId } = useParams();
 
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const paymentHistoryItem = useLoaderData();
+  const initialHistoryItem = useLoaderData();
 
-  const { data } = useQuery({
-    queryKey: ["historyItem"],
-    queryFn: () => paymentHistoryApi.getPaymentHistoryByItemId(itemId),
-    initialData: paymentHistoryItem,
-  });
+  const historyItem = useHistoryItemQuery(initialHistoryItem, itemId);
 
   return (
     <DetailPageDefaultLayout>
@@ -34,12 +29,12 @@ const DetailPage = () => {
           >
             {isEditMode ? (
               <EditPaymentHistory
-                item={data[0]}
+                item={historyItem[0]}
                 setIsEditMode={setIsEditMode}
               />
             ) : (
               <PaymentHistoryDetail
-                item={data[0]}
+                item={historyItem[0]}
                 setIsEditMode={setIsEditMode}
               />
             )}

@@ -1,33 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import paymentHistoryApi from "../../api/PaymentHistory/paymentHistory.api";
 import { numberWithCommas } from "../../utils";
 import { Box, Button, Flex, Text } from "../ui";
 
-export const PaymentHistoryList = ({ selectedMonth }) => {
-  const { user } = useParams();
-
+export const PaymentHistoryList = ({ historyList }) => {
   const navigate = useNavigate();
-
-  const paymentHistoryList = useLoaderData();
-
-  const { data } = useQuery({
-    queryKey: ["history"],
-    queryFn: () => paymentHistoryApi.getPaymentHistoryById(user),
-    initialData: paymentHistoryList,
-  });
-
-  const filteredList = data.filter(({ date }) => {
-    const formattedDate = new Date(date);
-    return formattedDate.getMonth() + 1 === selectedMonth;
-  });
 
   return (
     <Box>
       <Flex $flexDirection="column" $gap="16px">
-        {filteredList.length ? (
-          filteredList.map(({ id, date, title, amount, description }) => (
+        {historyList.length ? (
+          historyList.map(({ id, date, title, amount, description, user }) => (
             <ListButton
               key={id}
               onClick={() => navigate(`/detail/${user}/${id}`)}
@@ -46,7 +29,7 @@ export const PaymentHistoryList = ({ selectedMonth }) => {
             </ListButton>
           ))
         ) : (
-          <Text>{selectedMonth}월의 지출 내역이 없습니다.</Text>
+          <Text>지출 내역이 없습니다.</Text>
         )}
       </Flex>
     </Box>
