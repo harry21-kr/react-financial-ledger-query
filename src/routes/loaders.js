@@ -1,4 +1,5 @@
 import { redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 import authApi from "../api/Auth/auth.api";
 import paymentHistoryApi from "../api/PaymentHistory/paymentHistory.api";
 
@@ -23,6 +24,7 @@ export const homePageLoader = async ({ params }) => {
     if (params.user !== user.id) return redirect(`/home/${user.id}`);
     return paymentHistoryApi.getPaymentHistoryById(user.id);
   } catch (err) {
+    toast.error("세션이 만료되었습니다. 다시 로그인해주세요.");
     sessionStorage.removeItem("token");
     return redirect("/");
   }
@@ -34,6 +36,7 @@ export const detailPageLoader = async ({ params }) => {
     if (params.user !== user.id) return redirect(`/home/${user.id}`);
     return paymentHistoryApi.getPaymentHistoryByItemId(params.itemId);
   } catch (err) {
+    toast.error("세션이 만료되었습니다. 다시 로그인해주세요.");
     sessionStorage.removeItem("token");
     return redirect("/");
   }

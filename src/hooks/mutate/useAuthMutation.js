@@ -1,26 +1,36 @@
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 import authApi from "../../api/Auth/auth.api";
 
 const useAuthMutation = () => {
   const { mutateAsync: login } = useMutation({
-    mutationFn: ({ id, password }) => authApi.login(id, password),
+    mutationFn: ({ id, password }) => {
+      toast.loading("로그인 중 ...", { toastId: "loadingToast" });
+      return authApi.login(id, password);
+    },
     onSuccess: (user) => {
-      alert("로그인되었습니다.");
+      toast.dismiss("loadingToast");
+      toast.info(`반가워요 ${user.nickname}님!`);
       sessionStorage.setItem("token", user.accessToken);
     },
     onError: (error) => {
-      alert(error.response.data.message);
+      toast.dismiss("loadingToast");
+      toast.error(error.response.data.message);
     },
   });
 
   const { mutateAsync: signUp } = useMutation({
-    mutationFn: ({ id, password, nickname }) =>
-      authApi.signUp(id, password, nickname ? nickname : id),
+    mutationFn: ({ id, password, nickname }) => {
+      toast.loading("회원가입 중 ...", { toastId: "loadingToast" });
+      return authApi.signUp(id, password, nickname ? nickname : id);
+    },
     onSuccess: (user) => {
-      alert(user.message);
+      toast.dismiss("loadingToast");
+      toast.success(user.message);
     },
     onError: (error) => {
-      alert(error.response.data.message);
+      toast.dismiss("loadingToast");
+      toast.error(error.response.data.message);
     },
   });
 

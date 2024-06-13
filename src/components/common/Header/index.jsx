@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import useAuthQuery from "../../../hooks/query/useAuthQuery";
 import { Button } from "../../ui";
@@ -11,6 +12,7 @@ const Header = () => {
 
   const logout = () => {
     sessionStorage.removeItem("token");
+    toast.success("성공적으로 로그아웃 되었습니다!");
     navigate("/");
   };
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import useHistoryMutation from "../../hooks/mutate/useHistoryMutation";
@@ -23,13 +24,13 @@ export const PaymentHistoryForm = ({ selectedMonth }) => {
 
   const handleSubmitHistory = async () => {
     if (!newItem.title.length) {
-      return alert("지출 항목을 입력해주세요");
+      return toast.info("지출 항목을 입력해주세요");
     } else if (!Number.isInteger(newItem.amount)) {
-      return alert("금액란에 소수점은 허용되지 않습니다.");
+      return toast.info("금액란에 소수점은 허용되지 않습니다.");
     } else if (!newItem.amount) {
-      return alert("금액을 입력해주세요");
+      return toast.info("금액을 입력해주세요");
     } else if (!newItem.description) {
-      return alert("지출 내용을 입력해주세요");
+      return toast.info("지출 내용을 입력해주세요");
     }
     const newHistoryItemWithId = { ...newItem, user, id: uuidv4() };
     await postHistoryItem(newHistoryItemWithId);
