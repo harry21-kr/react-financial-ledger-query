@@ -1,8 +1,33 @@
-# React + Vite
+# 내일배움캠프 리액트 심화주차 5기 개인 프로젝트
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 지출 내역 기록 사이트
 
-Currently, two official plugins are available:
+### 주요 라이브러리
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React
+- axios
+- Tanstack Query
+- React Router
+- react-toastify
+
+### 주요 기능
+
+#### 로그인 페이지
+
+- 회원가입/로그인 기능
+
+#### 홈페이지 (마이페이지)
+
+- 로그인한 유저의 지출 내역 확인 가능
+- 로그인한 유저는 지출 내역 생성 가능
+- Chart.js 라이브러리를 사용해 지출한 금액을 시각화
+
+#### 디테일 페이지
+
+- 로그인한 유저의 특정 지출 내역 확인 가능
+- 로그인한 유저는 지출 내역 수정/삭제 가능
+
+#### 헤더
+
+- 로그인한 유저의 닉네임 확인 가능
+- 로그아웃 기능
